@@ -1,0 +1,6 @@
+build.js
+.vscode
+staterino.js
+yarn.lock
+.prettierrc
+.eslintrc.js

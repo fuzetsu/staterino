@@ -1,4 +1,4 @@
-# Staterino
+# Staterino [![npm](https://img.shields.io/npm/v/staterino.svg)](https://www.npmjs.com/package/staterino) [![size](https://img.badgesize.io/https://unpkg.com/staterino@latest/dist/staterino.min.js.png?label=gzip&color=blue&compression=gzip)](https://unpkg.com/staterino@latest/dist/staterino.min.js)
 
 Simple hook based state management.
 
@@ -6,7 +6,7 @@ Simple hook based state management.
 
 ```jsx
 import * as hooks from 'preact/hooks'
-import { h, render } from 'preact'
+import { render } from 'preact'
 import merge from 'mergerino'
 import staterino from 'staterino'
 
