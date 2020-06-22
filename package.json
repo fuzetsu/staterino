@@ -1,0 +1,19 @@
+{
+  "name": "staterino",
+  "version": "0.0.1",
+  "description": "hook based state management",
+  "main": "staterino.js",
+  "repository": "https://github.com/fuzetsu/staterino.git",
+  "author": "Daniel Loomer <fuzetsu@users.noreply.github.com>",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node ./build.js"
+  },
+  "devDependencies": {
+    "buble": "^0.20.0",
+    "eslint": "^7.3.0",
+    "terser": "^4.8.0"
+  }
+}
