@@ -6,7 +6,6 @@
   "repository": "https://github.com/fuzetsu/staterino.git",
   "author": "Daniel Loomer <fuzetsu@users.noreply.github.com>",
   "license": "MIT",
-  "private": true,
   "type": "module",
   "scripts": {
     "build": "node ./build.js"

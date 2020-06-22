@@ -6,7 +6,7 @@ Simple hook based state management.
 
 ```jsx
 import * as hooks from 'preact/hooks'
-import { render } from 'preact'
+import { h, render } from 'preact'
 import merge from 'mergerino'
 import staterino from 'staterino'
 
@@ -18,11 +18,12 @@ const useStore = staterino({ merge, hooks, state })
 
 const { set, get, subscribe } = useStore
 const increment = () => set({ count: x => x + 1 })
+const decrement = () => set({ count: x => x - 1 })
 
 // reset count when it reaches 11
 subscribe(
   count => {
-    if (count > 10) set({ count: 0 })
+    if (Math.abs(count) > 10) set({ count: 0 })
   },
   s => s.count
 )
@@ -33,12 +34,15 @@ const App = () => {
     <div>
       <p>Count is {count}</p>
       <button onclick={increment}>+</button>
+      <button onclick={decrement}>-</button>
     </div>
   )
 }
 
-render(document.body, <App />)
+render(<App />, document.getElementById('app'))
 ```
+
+[Code sandbox](https://codesandbox.io/s/staterino-example-f0de8?file=/src/index.js)
 
 ## Credits
 
