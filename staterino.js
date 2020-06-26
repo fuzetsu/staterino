@@ -34,11 +34,11 @@ const createStore = ({ merge, hooks: { useReducer, useRef, useLayoutEffect }, st
   useStore.set = (...patches) => {
     state = merge(state, patches)
     // when state is patched check if each subs slice of state has changed, and callback if so
-    for (const sub of subs) {
+    subs.forEach(sub => {
       const [slice, isArr] = runSelector(sub.selector)
       if (isArr ? !arrEqual(slice, sub.slice) : slice !== sub.slice)
         runCallback(sub.callback, (sub.slice = slice), isArr)
-    }
+    })
   }
 
   // external subscription
