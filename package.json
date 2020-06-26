@@ -1,6 +1,6 @@
 {
   "name": "staterino",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "hook based state management",
   "source": "dist/staterino.js",
   "main": "dist/staterino.min.js",
