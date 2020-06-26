@@ -17,16 +17,16 @@ const createStore = ({ merge, hooks: { useReducer, useRef, useLayoutEffect }, st
   // main hook, manages subscription and returns slice
   const useStore = (selector = SELF) => {
     const [, redraw] = useReducer(c => c + 1, 0)
-    const sub = useRef({ callback: redraw }).current
+    const sub = useRef({ _callback: redraw }).current
     const sameSel =
-      sub.selector &&
-      (Array.isArray(selector) ? arrEqual(selector, sub.selector) : selector === sub.selector)
+      sub._selector &&
+      (Array.isArray(selector) ? arrEqual(selector, sub._selector) : selector === sub._selector)
     if (!sameSel) {
-      sub.slice = runSelector(selector)[0]
-      sub.selector = selector
+      sub._slice = runSelector(selector)[0]
+      sub._selector = selector
     }
     useLayoutEffect(() => subscribe(sub), [])
-    return sub.slice
+    return sub._slice
   }
 
   // getter / setter for state, setter uses mergerino for immutable merges
@@ -35,9 +35,9 @@ const createStore = ({ merge, hooks: { useReducer, useRef, useLayoutEffect }, st
     state = merge(state, patches)
     // when state is patched check if each subs slice of state has changed, and callback if so
     subs.forEach(sub => {
-      const [slice, isArr] = runSelector(sub.selector)
-      if (isArr ? !arrEqual(slice, sub.slice) : slice !== sub.slice)
-        runCallback(sub.callback, (sub.slice = slice), isArr)
+      const [slice, isArr] = runSelector(sub._selector)
+      if (isArr ? !arrEqual(slice, sub._slice) : slice !== sub._slice)
+        runCallback(sub._callback, (sub._slice = slice), isArr)
     })
   }
 
@@ -45,7 +45,7 @@ const createStore = ({ merge, hooks: { useReducer, useRef, useLayoutEffect }, st
   useStore.subscribe = (callback, selector = SELF) => {
     const [slice, isArr] = runSelector(selector)
     runCallback(callback, slice, isArr)
-    return subscribe({ callback, selector, slice })
+    return subscribe({ _callback: callback, _selector: selector, _slice: slice })
   }
 
   return useStore
