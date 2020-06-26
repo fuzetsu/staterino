@@ -1,10 +1,10 @@
 {
   "name": "staterino",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "hook based state management",
-  "main": "dist/staterino.js",
   "source": "dist/staterino.js",
-  "umd:main": "dist/staterino.es5.js",
+  "main": "dist/staterino.min.js",
+  "unpkg": "dist/staterino.es5.min.js",
   "module": "dist/staterino.min.js",
   "repository": "https://github.com/fuzetsu/staterino.git",
   "author": "Daniel Loomer <fuzetsu@users.noreply.github.com>",
