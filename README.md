@@ -55,7 +55,7 @@ const useStore = staterino({
   // reducer function that combines current state with a patch
   merge,
   // staterino relies on these two hooks to function
-  hooks: { useEffect, useReducer }
+  hooks: { useLayoutEffect, useReducer }
 })
 ```
 
