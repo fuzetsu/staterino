@@ -4,7 +4,7 @@ const runCallback = (callback, slice, isArr) => callback[isArr ? 'apply' : 'call
 
 const SELF = x => x
 
-const createStore = ({ merge, hooks: { useReducer, useRef, useLayoutEffect }, state = {} }) => {
+const createStore = ({ merge, hooks: { useReducer, useLayoutEffect }, state = {} }) => {
   // track subs using set
   const subs = new Set()
   const subscribe = sub => (subs.add(sub), () => subs.delete(sub))
@@ -17,7 +17,7 @@ const createStore = ({ merge, hooks: { useReducer, useRef, useLayoutEffect }, st
   // main hook, manages subscription and returns slice
   const useStore = (selector = SELF) => {
     const [, redraw] = useReducer(c => c + 1, 0)
-    const sub = useRef({ _callback: redraw }).current
+    const [sub] = useReducer(SELF, { _callback: redraw })
     const sameSel =
       sub._selector &&
       (Array.isArray(selector) ? arrEqual(selector, sub._selector) : selector === sub._selector)
