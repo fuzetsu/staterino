@@ -5,8 +5,8 @@ Simple hook based state management.
 ## Usage
 
 ```jsx
-import * as hooks from 'preact/hooks'
 import { render } from 'preact'
+import * as hooks from 'preact/hooks'
 import merge from 'mergerino'
 import staterino from 'staterino'
 
