@@ -17,5 +17,13 @@
     "buble": "^0.20.0",
     "eslint": "^7.3.0",
     "terser": "^4.8.0"
-  }
+  },
+  "keywords": [
+    "state",
+    "react",
+    "preact",
+    "hooks",
+    "merge",
+    "store"
+  ]
 }
