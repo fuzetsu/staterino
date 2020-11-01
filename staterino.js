@@ -12,8 +12,10 @@ const staterino = ({ merge, hooks: { useReducer, useLayoutEffect }, state = {} }
 
   const checkSub = sub => {
     const [slice, isArr] = runSelector(sub._selector)
-    if (isArr ? !arrEqual(slice, sub._slice) : slice !== sub._slice)
-      runCallback(sub._callback, (sub._slice = slice), isArr)
+    if (isArr ? !arrEqual(slice, sub._slice) : slice !== sub._slice) {
+      if (typeof sub._cleanup === 'function') sub._cleanup()
+      sub._cleanup = runCallback(sub._callback, (sub._slice = slice), isArr)
+    }
   }
 
   // track subs using set

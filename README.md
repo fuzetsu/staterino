@@ -101,7 +101,11 @@ const {
 ```js
 subscribe(
   // the callback function that triggers when state changes
-  (count, age) => console.log(count, age),
+  (count, age) => {
+    console.log(count, age)
+    // optional cleanup function, similar to useEffect
+    return () => console.log('cleaning up', count, age)
+  },
   // the state selector
   ['counter.count', state => state.age]
 )
