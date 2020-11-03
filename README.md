@@ -99,7 +99,8 @@ const {
 `subscribe` takes two parameters, a callback for when the subscribed portion of state changes, and a selector that specifies which part of state you would like to subscribe to:
 
 ```js
-subscribe(
+// the subscribe call returns a function used to unsubscribe
+const unSub = subscribe(
   // the callback function that triggers when state changes
   (count, age) => {
     console.log(count, age)
