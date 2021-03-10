@@ -1,4 +1,4 @@
-# Staterino [![npm](https://img.shields.io/npm/v/staterino.svg)](https://www.npmjs.com/package/staterino) [![size](https://img.badgesize.io/https://unpkg.com/staterino@latest/dist/staterino.min.js.png?label=gzip&color=blue&compression=gzip)](https://unpkg.com/staterino@latest/dist/staterino.min.js)
+# Staterino [![npm](https://img.shields.io/npm/v/staterino.svg)](https://www.npmjs.com/package/staterino) [![size](https://img.shields.io/bundlephobia/minzip/staterino)](https://unpkg.com/staterino@latest/dist/staterino.min.js)
 
 Simple hook based state management.
 
