@@ -1,16 +1,17 @@
 const arrEqual = (a, b) => a === b || (a.length === b.length && a.every((val, i) => val === b[i]))
-const getPath = (obj, path) => path.split('.').reduce((acc, k) => (acc ? acc[k] : null), obj)
+const getPath = (obj, path) => path.split('.').reduce((acc, k) => (acc ? acc[k] : undefined), obj)
 const runCallback = (callback, slice, isArr) => callback[isArr ? 'apply' : 'call'](null, slice)
 
 const SELF = x => x
 
-const staterino = ({ merge, hooks: { useReducer, useLayoutEffect }, state = {} }) => {
-  // evaluate selectors
+const staterino = ({ merge, hooks: { useReducer, useLayoutEffect }, state: initialState = {} }) => {
+  let state = initialState
+
   const runSelectorPart = part => (typeof part === 'string' ? getPath(state, part) : part(state))
   const runSelector = sel =>
     Array.isArray(sel) ? [sel.map(runSelectorPart), true] : [runSelectorPart(sel), false]
 
-  const checkSub = sub => {
+  const runSub = sub => {
     const [slice, isArr] = runSelector(sub._selector)
     if (isArr ? !arrEqual(slice, sub._slice) : slice !== sub._slice) {
       if (typeof sub._cleanup === 'function') sub._cleanup()
@@ -18,15 +19,13 @@ const staterino = ({ merge, hooks: { useReducer, useLayoutEffect }, state = {} }
     }
   }
 
-  // track subs using set
   const subs = new Set()
   const subscribe = sub => {
     subs.add(sub)
-    checkSub(sub)
+    runSub(sub)
     return () => subs.delete(sub)
   }
 
-  // main hook, manages subscription and returns slice
   const useStore = (selector = SELF) => {
     const [, redraw] = useReducer(c => c + 1, 0)
     const [sub] = useReducer(SELF, { _callback: redraw })
@@ -41,17 +40,16 @@ const staterino = ({ merge, hooks: { useReducer, useLayoutEffect }, state = {} }
     return sub._slice
   }
 
-  // getter / setter for state, setter uses mergerino for immutable merges
   useStore.get = () => state
-  useStore.set = (...patches) => {
-    state = merge(state, patches)
-    // when state is patched check if each subs slice of state has changed, and callback if so
-    subs.forEach(checkSub)
+  useStore.set = patch => {
+    state = merge(state, patch)
+    subs.forEach(runSub)
   }
 
-  // external subscription, pass empty arr as slice to force callback to be called on first run
-  useStore.subscribe = (callback, selector = SELF) =>
-    subscribe({ _callback: callback, _selector: selector, _slice: [] })
+  useStore.subscribe = (selector, callback) => {
+    if (!callback) [selector, callback] = [SELF, selector]
+    return subscribe({ _callback: callback, _selector: selector, _slice: [] })
+  }
 
   return useStore
 }

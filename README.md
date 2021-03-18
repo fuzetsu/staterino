@@ -31,8 +31,8 @@ const App = () => {
   return (
     <div>
       <p>Count is {count}</p>
-      <button onclick={increment}>+</button>
-      <button onclick={decrement}>-</button>
+      <button onClick={increment}>+</button>
+      <button onClick={decrement}>-</button>
     </div>
   )
 }
@@ -83,6 +83,12 @@ const [count, age] = useStore(['counter.count', state => state.age])
 
 If you pass an array the hook will return an array as well with the state slices in the correct order.
 
+If no arguments are passed `useStore()` will return the whole state object:
+
+```js
+const state = useStore()
+```
+
 `useStore` is the hook itself, but it contains 3 essential functions:
 
 ```js
@@ -96,23 +102,31 @@ const {
 } = useStore
 ```
 
-`subscribe` takes two parameters, a callback for when the subscribed portion of state changes, and a selector that specifies which part of state you would like to subscribe to:
+`subscribe` takes two parameters, a state selector or array of state selectors, and a callback for when the subscribed portion of state changes:
 
 ```js
 // the subscribe call returns a function used to unsubscribe
 const unSub = subscribe(
+  // the state selector
+  ['counter.count', state => state.age],
   // the callback function that triggers when state changes
   (count, age) => {
     console.log(count, age)
     // optional cleanup function, similar to useEffect
     return () => console.log('cleaning up', count, age)
-  },
-  // the state selector
-  ['counter.count', state => state.age]
+  }
 )
 ```
 
 The selector parameter works under the same rules as the one passed to `useStore`, it can be a string a function or an array with a mix of the two.
+
+If you just want to subscribe to any change to the state overall you can just pass a single parameter as a shorthand:
+
+```js
+subscribe(state => {
+  // do something whenever state changes
+})
+```
 
 ## Credits
 

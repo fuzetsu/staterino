@@ -1,6 +1,6 @@
 {
   "name": "staterino",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "hook based state management",
   "source": "dist/staterino.js",
   "main": "dist/staterino.min.js",
@@ -11,11 +11,17 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "node ./build.js"
+    "build": "node ./build.js && jest",
+    "test": "jest --watch"
   },
   "devDependencies": {
+    "@testing-library/preact": "^2.0.1",
+    "@types/jest": "^26.0.20",
     "buble": "^0.20.0",
     "eslint": "^7.3.0",
+    "jest": "^26.6.3",
+    "mergerino": "^0.4.0",
+    "preact": "^10.5.12",
     "terser": "^4.8.0"
   },
   "keywords": [
@@ -25,5 +31,9 @@
     "hooks",
     "merge",
     "store"
-  ]
+  ],
+  "dependencies": {
+    "@types/mergerino": "^0.4.0"
+  },
+  "types": "types/staterino.d.ts"
 }
