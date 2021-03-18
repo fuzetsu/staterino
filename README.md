@@ -20,10 +20,10 @@ const decrement = () => set({ count: x => x - 1 })
 
 // reset count when it reaches 11
 subscribe(
+  s => s.count,
   count => {
     if (Math.abs(count) > 10) set({ count: 0 })
-  },
-  s => s.count
+  }
 )
 
 const App = () => {
