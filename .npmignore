@@ -1,6 +1,9 @@
-build.js
 .vscode
-/staterino.js
 yarn.lock
 .prettierrc
 .eslintrc.js
+
+/build.js
+/staterino.js
+/staterino.test.js
+/type-test.js
